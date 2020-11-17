@@ -45,7 +45,7 @@ public class MemberDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,id);
             rs = pstmt.executeQuery();
-            if(rs.next()) {
+            if(rs.next()) { // id 존재
                 Member member = new Member();
                 member.setId(rs.getString("id"));
                 member.setPass(rs.getString("pass"));
@@ -54,7 +54,7 @@ public class MemberDAO {
                 member.setTel(rs.getString("tel"));
                 member.setEmail(rs.getString("email"));
                 member.setPicture(rs.getString("picture"));
-                return member;
+                return member; // id 해당하는 db의 정보 저장
             }
         }catch(SQLException e) {
             e.printStackTrace();
