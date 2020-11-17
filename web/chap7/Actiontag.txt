@@ -1,0 +1,22 @@
+액션태그
+<jsp:forward file="" /> : forward만 함
+
+<jsp:foward file="" > : foward 파라미터값 설정 가능
+    <jsp:param ... />
+</jsp:forward>
+
+2. include 액션태그
+    <jsp:include file="" /> : include만 함
+
+    <jsp:include file="" > : include 파라미터값 설정 가능
+        <jsp:param .../>
+    </jsp:include>
+
+3. useBean 액션태그
+    <jsp:useBean id=".." class="패키지명.클래스명" scope ="..."/> : scope에는 pageContext, request, session, application 4개만 가능
+
+4. setProperty 액션태그 : userBean에 설정된 Bean 클래스의 setter
+    <jsp:setProperty property="*" name=".." />
+
+5. getProperty 액션태그 : userBean에 설정된 Bean 클래스의 getter
+    <jsp:getProperty property="*" name=".." />
