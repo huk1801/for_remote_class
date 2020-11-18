@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDAO {
     public int insert(Member member){
@@ -62,5 +64,68 @@ public class MemberDAO {
             DBConnection.close(conn,pstmt,rs);
         }
         return null;
+    }
+    public int update(Member member) {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+        String sql = "update member set name = ?,"
+                + " gender=?, email=?, tel=?, picture=? where id=?"; //공백 항상 추가하는 습관들이기
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, member.getName());
+            pstmt.setInt(2,member.getGender());
+            pstmt.setString(3, member.getEmail());
+            pstmt.setString(4, member.getTel());
+            pstmt.setString(5, member.getPicture());
+            pstmt.setString(6, member.getId());
+            return pstmt.executeUpdate(); //변경된 레코드의 갯수
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(conn,pstmt,null);
+        }
+        return 0;
+    }
+    public List<Member> list() {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Member> list = new ArrayList<Member>();
+        try {
+            pstmt = conn.prepareStatement("select * from member");
+            rs = pstmt.executeQuery();
+            while(rs.next()) {
+                Member m = new Member();
+                m.setId(rs.getString("id"));
+                m.setPass(rs.getString("pass"));
+                m.setName(rs.getString("name"));
+                m.setGender(rs.getInt("gender"));
+                m.setTel(rs.getString("tel"));
+                m.setEmail(rs.getString("email"));
+                m.setPicture(rs.getString("picture"));
+                list.add(m);
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(conn,pstmt,rs);
+        }
+        return null;
+    }
+    public int delete(String id) {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+        String sql = "delete from member where id = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,id);
+            return pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(conn,pstmt,null);
+        }
+        return 0;
     }
 }

@@ -9,22 +9,20 @@
     String id = request.getParameter("id");
     if(login == null) {
 %>
-<%= id +","+ login%>
 <script>
     alert("로그인 하세요");
     location.href="loginForm.jsp";
 </script>
 <%
     }
-    if(login != null && !id.equals(login)) {
-        if(!login.equals("admin")) { %>
+    else if(!id.equals(login) && !login.equals("admin")) { %>
 <script>
     alert("내 정보 조회만 가능합니다.");
     location.href ="main.jsp";
 </script>
 <%
-        }
-    }
+    } else { //정상적인 경우.
+    Member member = new MemberDAO().selectOne(id);
 %>
 <html>
 <head>
@@ -32,18 +30,15 @@
     <link rel="stylesheet" href="../../css/main.css">
 </head>
 <body>
-<%
-    Member member = new MemberDAO().selectOne(id);
-%>
 <form action="info.jsp" name="f" method="post">
     <input type="hidden" name="picture" value="">
     <table>
         <caption>회원정보보기</caption>
         <tr>
-            <td rowspan="6" valign="bottom">
-                <img src="" width="200" height="200" id="pic"><br>
+            <td rowspan="6" width="30%">
+                <img src="picture/<%=member.getPicture()%>" width="200" height="200" id="pic"><br>
                 </td>
-            <th>아이디</th>
+            <th width="20%">아이디</th>
             <td><%=member.getId()%></td>
         </tr>
         <tr>
@@ -64,11 +59,14 @@
         </tr>
         <tr>
             <td colspan="2">
-                <a href="#">[수정]</a>
-                <a href="#">[탈퇴]</a>
+                <a href="updateForm.jsp?id=<%=member.getId()%>">[수정]</a>
+                <% if(!id.equals("admin") && !login.equals("admin")) { %>
+                <a href="deleteForm.jsp?id=<%=member.getId()%>">[탈퇴]</a>
+                <% } %>
             </td>
         </tr>
     </table>
 </form>
+<% } %>
 </body>
 </html>
