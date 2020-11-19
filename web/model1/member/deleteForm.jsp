@@ -1,5 +1,4 @@
-<%@ page import="model.MemberDAO" %>
-<%@ page import="model.Member" %><%--
+<%--
   /web/model1/member/deleteForm.jsp
   1. id 파라미터 저장하기
   2. login 여부 검증하기

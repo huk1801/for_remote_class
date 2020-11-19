@@ -1,16 +1,7 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: GDJ30
-  Date: 2020-11-16
-  Time: 오전 9:52
-  To change this template use File | Settings | File Templates.
+  /web/index.jsp
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<script>
+  location.href="model1/member/main.jsp";
+</script>
