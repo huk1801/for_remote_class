@@ -1,13 +1,14 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../apache-tomcat-9.0.39/lib" />
-      <root url="jar://$PROJECT_DIR$/../jar파일/cos.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../jar파일/jai_codec.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../jar파일/jai_core.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../Library/apache-tomcat-9.0.39/lib" />
+      <root url="jar://$PROJECT_DIR$/../../Library/cos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Library/jai_codec.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Library/jai_core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Library/lib/mariadb-java-client-2.4.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/../apache-tomcat-9.0.39/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../Library/apache-tomcat-9.0.39/lib" recursive="false" />
   </library>
 </component>

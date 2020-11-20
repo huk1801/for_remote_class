@@ -10,7 +10,7 @@
 <body>
 <script type="text/javascript">
     function win_upload() {
-        var op = "width=500, height=150, left=50, top=150";
+        var op = "width=500, height=550, left=50, top=150";
         open("pictureForm.jsp", "", op);
     }
 </script>
