@@ -107,20 +107,24 @@ public class BoardDAO {
 
     public Board selectOne(int num){
         Connection conn =DBConnection.getConnection();
-        String sql = "select * from board where num = ?";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement("select * from board where num = ?");
             pstmt.setInt(1,num);
             rs = pstmt.executeQuery();
             if(rs.next()) { // id 존재
                 Board board = new Board();
+                board.setNum(rs.getInt("num"));
                 board.setName(rs.getString("name"));
+                board.setPass(rs.getString("pass"));
                 board.setSubject(rs.getString("subject"));
                 board.setContent(rs.getString("content"));
                 board.setFile1(rs.getString("file1"));
-
+                board.setGrp(rs.getInt("grp"));
+                board.setGrpstep(rs.getInt("grpstep"));
+                board.setReadcnt(rs.getInt("readcnt"));
+                board.setRegdate(rs.getTimestamp("regdate"));
                 return board;
             }
 
@@ -135,11 +139,9 @@ public class BoardDAO {
     public void readcntAdd(int num){
         Connection conn =DBConnection.getConnection();
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        String sql = "update board set readcnt = readcnt + 1 where num = ?";
 
         try {
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement("update board set readcnt = readcnt + 1 where num = ?");
             pstmt.setInt(1, num);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -147,5 +149,59 @@ public class BoardDAO {
         } finally {
             DBConnection.close(conn, pstmt, null);
         }
+    }
+
+    public void grpStepAdd (int grp, int grpstep){
+        Connection conn =DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+        String sql = "update board set grpstep = grpstep +1 where grp = ? and grpstep > ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, grp);
+            pstmt.setInt(1, grpstep);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(conn, pstmt, null);
+        }
+    }
+
+    public boolean update(Board board) {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+        String sql = "update board set name=?, subject=?, content=?, file1=? where num=?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, board.getName());
+            pstmt.setString(2, board.getSubject());
+            pstmt.setString(3, board.getContent());
+            pstmt.setString(4, board.getFile1());
+            pstmt.setInt(5, board.getNum());
+            pstmt.executeUpdate();
+            return true; //변경된 레코드의 갯수
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(conn,pstmt,null);
+        }
+        return false;
+    }
+
+    public boolean delete(Board board) {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+        String sql = "delete from board where num = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,board.getNum());
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnection.close(conn,pstmt,null);
+        }
+        return false;
     }
 }

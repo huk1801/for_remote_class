@@ -25,8 +25,8 @@
 <%
     int num = Integer.parseInt(request.getParameter("num"));
     BoardDAO dao = new BoardDAO();
-    Board board = dao.selectOne(num);
-    dao.readcntAdd(num);
+    Board board = dao.selectOne(num);   //num에 해당하는 게시물 조회
+    dao.readcntAdd(num);    //조회수 증가
 %>
 <html>
 <head>
@@ -55,13 +55,18 @@
     </tr>
     <tr>
         <th>첨부파일</th>
-        <td id="file"><a href="./file/<%=board.getFile1()%>"><%=board.getFile1()%></a></td>
+        <td id="file"><% if (board.getFile1()==null || board.getFile1().equals("")){%>
+            &nbsp;
+            <% } else { %>
+            <a href="./file/<%=board.getFile1()%>"><%=board.getFile1()%></a>
+            <% } %>
+        </td>
     </tr>
     <tr>
         <td id="option" colspan="2">
-            <a href="">[답변]</a>
-            <a href="">[수정]</a>
-            <a href="">[삭제]</a>
+            <a href="replyForm.jsp?num=<%=board.getNum()%>">[답변]</a>
+            <a href="updateForm.jsp?num=<%=board.getNum()%>">[수정]</a>
+            <a href="deleteForm.jsp?num=<%=board.getNum()%>">[삭제]</a>
             <a href="list.jsp">[목록]</a>
         </td>
     </tr>

@@ -41,7 +41,7 @@
 <script type="text/javascript">
     img = opener.document.getElementById("pic");
     img.src="picture/<%=fname%>";
-    //db저장을 위한 파라미터 설정
+    //db 저장을 위한 파라미터 설정
     opener.document.f.picture.value="<%=fname%>";
     self.close();
 </script>
